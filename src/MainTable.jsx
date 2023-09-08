@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
+import CustomModal from "./Modal";
 import "./MainTable.css";
 
 Modal.setAppElement("#root");
@@ -38,6 +38,14 @@ function MainTable({ records, setRecords, filterOption }) {
       editingRecord.value.trim() !== "" &&
       editingRecord.date.trim() !== ""
     );
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -96,6 +104,12 @@ function MainTable({ records, setRecords, filterOption }) {
     localStorage.setItem("records", JSON.stringify(updatedRecords));
   };
 
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleAddRecord();
+    }
+  };
+
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
     return new Date(dateString).toLocaleDateString("pt-BR", options);
@@ -117,11 +131,7 @@ function MainTable({ records, setRecords, filterOption }) {
           onChange={(e) =>
             setEditingRecord({ ...editingRecord, name: e.target.value })
           }
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              handleAddRecord();
-            }
-          }}
+          onKeyPress={handleEnterKeyPress}
         />
 
         <select
@@ -129,11 +139,7 @@ function MainTable({ records, setRecords, filterOption }) {
           onChange={(e) =>
             setEditingRecord({ ...editingRecord, type: e.target.value })
           }
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              handleAddRecord();
-            }
-          }}
+          onKeyPress={handleEnterKeyPress}
         >
           <option value="entrada">Entrada</option>
           <option value="saída">Saída</option>
@@ -145,11 +151,7 @@ function MainTable({ records, setRecords, filterOption }) {
           onChange={(e) =>
             setEditingRecord({ ...editingRecord, value: e.target.value })
           }
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              handleAddRecord();
-            }
-          }}
+          onKeyPress={handleEnterKeyPress}
         />
         <input
           type="date"
@@ -157,11 +159,7 @@ function MainTable({ records, setRecords, filterOption }) {
           onChange={(e) =>
             setEditingRecord({ ...editingRecord, date: e.target.value })
           }
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              handleAddRecord();
-            }
-          }}
+          onKeyPress={handleEnterKeyPress}
         />
         <button onClick={handleAddRecord} disabled={isFormIncomplete}>
           Adicionar
@@ -169,17 +167,9 @@ function MainTable({ records, setRecords, filterOption }) {
       </div>
 
       {isModalOpen && (
-        <Modal
-          isOpen={true}
-          onRequestClose={() => setIsModalOpen(false)}
-          contentLabel="Erro"
-          className="custom-modal"
-          overlayClassName="custom-overlay"
-        >
-          <div className="modal-content">
-            <p>Por favor, preencha todos os campos!</p>
-          </div>
-        </Modal>
+        <CustomModal isOpen={isModalOpen} onRequestClose={closeModal}>
+          <p>Por favor, preencha todos os campos!</p>
+        </CustomModal>
       )}
 
       <div className="table-container">

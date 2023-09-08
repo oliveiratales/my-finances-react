@@ -1,0 +1,15 @@
+.custom-modal {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background-color: #ffffff;
+    color: #05161a;
+    border-radius: 15px;
+    padding: 1em;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .custom-modal:focus {
+    outline: none;
+  }
