@@ -1,0 +1,27 @@
+.counter-box {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+}
+
+.counter-card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #6da5c0;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  transition: 0.4s;
+  scale: 1;
+  cursor: pointer;
+}
+
+.counter-card:hover {
+  transition: 0.4s;
+  transform: scale(1.05);
+}
+
+.counter-card h2 {
+  margin-bottom: 0.5em;
+}
