@@ -9,7 +9,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #05161a;
+  background-image: url('../public/background.jpg');
+  background-position: center;
+  background-size: cover;
   color: #ffffff;
   min-height: 100vh;
 }

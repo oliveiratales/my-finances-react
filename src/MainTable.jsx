@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { CSSTransition } from "react-transition-group";
 import Modal from "react-modal";
 import "./MainTable.css";
 
 Modal.setAppElement("#root");
 
-function MainTable({ records, setRecords }) {
+function MainTable({ records, setRecords, filterOption }) {
   const getCurrentDate = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -24,6 +23,13 @@ function MainTable({ records, setRecords }) {
     value: "",
     date: getCurrentDate(),
   });
+
+  const filteredRecords =
+    filterOption === "entrada"
+      ? records.filter((record) => record.type === "entrada")
+      : filterOption === "saída"
+      ? records.filter((record) => record.type === "saída")
+      : records;
 
   const isFormValid = () => {
     return (
@@ -105,28 +111,45 @@ function MainTable({ records, setRecords }) {
       <div className="record-form">
         <input
           type="text"
-          placeholder="Nome"
+          placeholder="Digite o  registro"
           value={editingRecord.name}
+          maxLength={20}
           onChange={(e) =>
             setEditingRecord({ ...editingRecord, name: e.target.value })
           }
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              handleAddRecord();
+            }
+          }}
         />
+
         <select
           value={editingRecord.type}
           onChange={(e) =>
             setEditingRecord({ ...editingRecord, type: e.target.value })
           }
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              handleAddRecord();
+            }
+          }}
         >
           <option value="entrada">Entrada</option>
           <option value="saída">Saída</option>
         </select>
         <input
           type="number"
-          placeholder="Valor"
+          placeholder="Digite o valor"
           value={editingRecord.value}
           onChange={(e) =>
             setEditingRecord({ ...editingRecord, value: e.target.value })
           }
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              handleAddRecord();
+            }
+          }}
         />
         <input
           type="date"
@@ -134,6 +157,11 @@ function MainTable({ records, setRecords }) {
           onChange={(e) =>
             setEditingRecord({ ...editingRecord, date: e.target.value })
           }
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              handleAddRecord();
+            }
+          }}
         />
         <button onClick={handleAddRecord} disabled={isFormIncomplete}>
           Adicionar
@@ -166,16 +194,16 @@ function MainTable({ records, setRecords }) {
             </tr>
           </thead>
           <tbody>
-            {records.length === 0 ? (
+            {filteredRecords.length === 0 ? (
               <tr className="empty-row">
                 <td colSpan="5">Inclua seus registros no formulário acima!</td>
               </tr>
             ) : (
-              records.map((record, index) => (
+              filteredRecords.map((record, index) => (
                 <tr key={index}>
                   <td>{record.name}</td>
                   <td>{record.type}</td>
-                  <td>R$ {record.value}</td>
+                  <td>R$ {parseFloat(record.value).toFixed(2)}</td>
                   <td className="dateInput">{formatDate(record.date)}</td>
                   <td>
                     <button onClick={() => handleEditRecord(index)}>

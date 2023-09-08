@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import './CounterBox.css';
+import React, { useState, useEffect } from "react";
+import "./CounterBox.css";
 
-function CounterBox({ records }) {
+function CounterBox({ records, filterOption, setFilterOption }) {
   const [income, setIncome] = useState(0);
   const [expenses, setExpenses] = useState(0);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const incomeTotal = records
-      .filter((record) => record.type === 'entrada')
+      .filter((record) => record.type === "entrada")
       .reduce((total, record) => total + parseFloat(record.value), 0);
 
     const expensesTotal = records
-      .filter((record) => record.type === 'saída')
+      .filter((record) => record.type === "saída")
       .reduce((total, record) => total + parseFloat(record.value), 0);
 
     const totalAmount = incomeTotal - expensesTotal;
@@ -24,15 +24,24 @@ function CounterBox({ records }) {
 
   return (
     <div className="counter-box">
-      <div className="counter-card">
+      <div
+        className={`counter-card ${filterOption === "entrada" ? "active" : ""}`}
+        onClick={() => setFilterOption("entrada")}
+      >
         <h2>Entradas</h2>
         <p>R$ {income.toFixed(2)}</p>
       </div>
-      <div className="counter-card">
+      <div
+        className={`counter-card ${filterOption === "saída" ? "active" : ""}`}
+        onClick={() => setFilterOption("saída")}
+      >
         <h2>Saídas</h2>
         <p>R$ {expenses.toFixed(2)}</p>
       </div>
-      <div className="counter-card">
+      <div
+        className={`counter-card ${filterOption === "total" ? "active" : ""}`}
+        onClick={() => setFilterOption("total")}
+      >
         <h2>Total</h2>
         <p>R$ {total.toFixed(2)}</p>
       </div>

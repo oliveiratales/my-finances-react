@@ -6,7 +6,7 @@
 
 .counter-card {
   flex: 1;
-  padding: 20px;
+  padding: 1em;
   border-radius: 15px;
   background-color: #6da5c0;
   color: white;
@@ -24,4 +24,30 @@
 
 .counter-card h2 {
   margin-bottom: 0.5em;
+}
+
+@media (max-width: 450px) {
+  .counter-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5em;
+  }
+
+  .counter-card {
+    margin-bottom: 0;
+    padding: 0.5em;
+  }
+
+  .counter-card h2 {
+    font-size: 1.2em;
+  }
+
+  .counter-box p {
+    font-size: 0.9em;
+  }
+
+  .counter-card:last-child {
+    grid-column: span 2;
+    margin-bottom: 1em;
+  }
 }
