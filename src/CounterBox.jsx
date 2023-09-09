@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types"; // Importe o PropTypes
 import "./CounterBox.css";
 
 function CounterBox({ records, filterOption, setFilterOption }) {
@@ -48,5 +49,11 @@ function CounterBox({ records, filterOption, setFilterOption }) {
     </div>
   );
 }
+
+CounterBox.propTypes = {
+  records: PropTypes.array.isRequired,
+  filterOption: PropTypes.string.isRequired,
+  setFilterOption: PropTypes.func.isRequired,
+};
 
 export default CounterBox;

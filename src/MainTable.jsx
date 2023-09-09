@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import Modal from "react-modal";
+import PropTypes from "prop-types";
 import CustomModal from "./Modal";
 import "./MainTable.css";
 
@@ -31,44 +33,34 @@ function MainTable({ records, setRecords, filterOption }) {
       ? records.filter((record) => record.type === "saída")
       : records;
 
-  const isFormValid = () => {
+  const isFormValid = useCallback(() => {
     return (
       editingRecord.name.trim() !== "" &&
       editingRecord.type.trim() !== "" &&
       editingRecord.value.trim() !== "" &&
       editingRecord.date.trim() !== ""
     );
-  };
+  }, [editingRecord.date, editingRecord.name, editingRecord.type, editingRecord.value]);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     if (isButtonClicked) {
       setIsFormIncomplete(!isFormValid());
     }
-  }, [editingRecord, isButtonClicked]);
+  }, [editingRecord, isButtonClicked, isFormValid]);
 
   const handleAddRecord = () => {
     setIsButtonClicked(true);
     if (isFormValid() && !isModalOpen) {
-      if (editingIndex === -1) {
-        const newRecord = { ...editingRecord };
-        const updatedRecords = [...records, newRecord];
-        setRecords(updatedRecords);
-        localStorage.setItem("records", JSON.stringify(updatedRecords));
-      } else {
-        const updatedRecords = [...records];
-        updatedRecords[editingIndex] = { ...editingRecord };
-        setRecords(updatedRecords);
-        localStorage.setItem("records", JSON.stringify(updatedRecords));
-      }
-
+      const updatedRecords =
+        editingIndex === -1
+          ? [...records, { ...editingRecord }]
+          : records.map((record, index) =>
+              index === editingIndex ? { ...editingRecord } : record
+            );
+      setRecords(updatedRecords);
+      localStorage.setItem("records", JSON.stringify(updatedRecords));
       clearFields();
       setEditingIndex(-1);
     } else {
@@ -118,14 +110,14 @@ function MainTable({ records, setRecords, filterOption }) {
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem("records") || "[]");
     setRecords(storedRecords);
-  }, []);
+  }, [setRecords]);
 
   return (
     <div className="main-table">
       <div className="record-form">
         <input
           type="text"
-          placeholder="Digite o  registro"
+          placeholder="Digite o registro"
           value={editingRecord.name}
           maxLength={20}
           onChange={(e) =>
@@ -212,5 +204,11 @@ function MainTable({ records, setRecords, filterOption }) {
     </div>
   );
 }
+
+MainTable.propTypes = {
+  records: PropTypes.array.isRequired,
+  setRecords: PropTypes.func.isRequired,
+  filterOption: PropTypes.string.isRequired,
+};
 
 export default MainTable;
