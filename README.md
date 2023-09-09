@@ -1,4 +1,4 @@
-# My Finances - Controle de Finanças Pessoais
+# My Finances - Controle de Finanças Pessoais 💸
 
 Projeto responsivo de controle de finanças pessoais desenvolvido com React, para registrar e acompanhar e suas entradas e saídas financeiras de forma simples e eficaz.
 
