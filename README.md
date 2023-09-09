@@ -2,15 +2,17 @@
 
 Este é um projeto de controle de finanças pessoais desenvolvido com React. Ele permite que você registre e acompanhe suas entradas e saídas financeiras de forma simples e eficaz.
 
+![image](https://github.com/oliveiratales/my-finances-react/assets/118945743/64ae2e03-ebd2-437a-8de8-ead2a7d1978f)
+
 ## Como Iniciar o Projeto
 
-Para iniciar o projeto em sua máquina local, siga estas etapas:
+Após clonar o repositório, acesse a pasta do projeto:
 
 ``cd my-finances``
 
 ### Pré-requisitos
 
-Certifique-se de ter o Node.js e o npm (gerenciador de pacotes do Node.js) instalados em seu sistema.
+Certifique-se de ter o Node.js e instale as dependências:
 
 ``npm install``
 
@@ -22,18 +24,15 @@ Para iniciar a aplicação, utilize o comando:
 
 ## Funcionalidades
 
-Registro de Transações: Registre suas entradas e saídas financeiras.
-Edição de Transações: Edite informações de transações existentes.
-Exclusão de Transações: Remova transações que não são mais relevantes.
-Filtragem por Tipo: Visualize suas transações por tipo (entrada ou saída).
-Resumo Financeiro: Veja um resumo de suas finanças, incluindo saldo atual.
-Armazenamento Local: Utiliza o localStorage para armazenar seus registros.
+- **Registro de Transações:** Registre suas entradas e saídas financeiras.
+- **Edição de Transações:** Edite informações de transações existentes.
+- **Exclusão de Transações:** Remova transações indesejadas.
+- **Filtragem por Tipo:** Clicando nos cards do cabeçalho, você pode filtrar a tabela por entradas, saídas ou o total.
+- **Armazenamento Local:** Utiliza o localStorage para armazenar seus registros.
 
 ## Tecnologias Utilizadas
 
-React: Biblioteca JavaScript para construção da interface de usuário.
-Jest: Framework de testes JavaScript para testar componentes e funcionalidades.
-LocalStorage: Armazenamento local de registros financeiros.
-Bootstrap: Framework CSS para estilização e responsividade.
-@testing-library/react: Facilita a escrita de testes de componentes React.
+![pngwing com (8)](https://github.com/oliveiratales/my-finances-react/assets/118945743/d9d935e9-54b3-452e-92ae-e00467b1fab4)
+
+
 
