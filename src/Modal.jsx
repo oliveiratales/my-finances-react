@@ -18,6 +18,7 @@ const CustomModal = ({ isOpen, onRequestClose, children }) => {
   );
 };
 
+// Prop-Types
 CustomModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,

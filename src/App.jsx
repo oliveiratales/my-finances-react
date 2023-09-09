@@ -8,6 +8,7 @@ function App() {
   const [records, setRecords] = useState([]);
   const [filterOption, setFilterOption] = useState("total");
 
+  // Atualização dos registros
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem("records") || "[]");
     setRecords(storedRecords);

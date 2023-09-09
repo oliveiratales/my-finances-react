@@ -7,6 +7,7 @@ import "./MainTable.css";
 Modal.setAppElement("#root");
 
 function MainTable({ records, setRecords, filterOption }) {
+  // Extrair a data atual para o input de data
   const getCurrentDate = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -26,6 +27,7 @@ function MainTable({ records, setRecords, filterOption }) {
     date: getCurrentDate(),
   });
 
+  // Filtro de registros
   const filteredRecords =
     filterOption === "entrada"
       ? records.filter((record) => record.type === "entrada")
@@ -33,6 +35,7 @@ function MainTable({ records, setRecords, filterOption }) {
       ? records.filter((record) => record.type === "saída")
       : records;
 
+  // Validação do form
   const isFormValid = useCallback(() => {
     return (
       editingRecord.name.trim() !== "" &&
@@ -40,16 +43,23 @@ function MainTable({ records, setRecords, filterOption }) {
       editingRecord.value.trim() !== "" &&
       editingRecord.date.trim() !== ""
     );
-  }, [editingRecord.date, editingRecord.name, editingRecord.type, editingRecord.value]);
+  }, [
+    editingRecord.date,
+    editingRecord.name,
+    editingRecord.type,
+    editingRecord.value,
+  ]);
 
   const closeModal = () => setIsModalOpen(false);
 
+  // Validação modal
   useEffect(() => {
     if (isButtonClicked) {
       setIsFormIncomplete(!isFormValid());
     }
   }, [editingRecord, isButtonClicked, isFormValid]);
 
+  // Post de registros
   const handleAddRecord = () => {
     setIsButtonClicked(true);
     if (isFormValid() && !isModalOpen) {
@@ -73,6 +83,7 @@ function MainTable({ records, setRecords, filterOption }) {
     }
   };
 
+  // Limpeza dos campos após registros
   const clearFields = () => {
     setEditingRecord({
       name: "",
@@ -83,12 +94,14 @@ function MainTable({ records, setRecords, filterOption }) {
     setEditingIndex(-1);
   };
 
+  // Edição de registros
   const handleEditRecord = (index) => {
     const recordToEdit = records[index];
     setEditingRecord({ ...recordToEdit });
     setEditingIndex(index);
   };
 
+  // Exclusão de registros
   const handleDeleteRecord = (index) => {
     const updatedRecords = [...records];
     updatedRecords.splice(index, 1);
@@ -96,17 +109,20 @@ function MainTable({ records, setRecords, filterOption }) {
     localStorage.setItem("records", JSON.stringify(updatedRecords));
   };
 
+  // Configuração do "Enter"
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
       handleAddRecord();
     }
   };
 
+  // Formatação da data
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
     return new Date(dateString).toLocaleDateString("pt-BR", options);
   };
 
+  // Atualização dos registros
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem("records") || "[]");
     setRecords(storedRecords);
@@ -115,6 +131,7 @@ function MainTable({ records, setRecords, filterOption }) {
   return (
     <div className="main-table">
       <div className="record-form">
+        {/* Nome do registro */}
         <input
           type="text"
           placeholder="Digite o registro"
@@ -125,7 +142,7 @@ function MainTable({ records, setRecords, filterOption }) {
           }
           onKeyPress={handleEnterKeyPress}
         />
-
+        {/* Tipo do registro */}
         <select
           value={editingRecord.type}
           onChange={(e) =>
@@ -136,6 +153,7 @@ function MainTable({ records, setRecords, filterOption }) {
           <option value="entrada">Entrada</option>
           <option value="saída">Saída</option>
         </select>
+        {/* Valor */}
         <input
           type="number"
           placeholder="Digite o valor"
@@ -145,6 +163,7 @@ function MainTable({ records, setRecords, filterOption }) {
           }
           onKeyPress={handleEnterKeyPress}
         />
+        {/* Data */}
         <input
           type="date"
           value={editingRecord.date}
@@ -158,12 +177,14 @@ function MainTable({ records, setRecords, filterOption }) {
         </button>
       </div>
 
+      {/* Modal */}
       {isModalOpen && (
         <CustomModal isOpen={isModalOpen} onRequestClose={closeModal}>
           <p>Por favor, preencha todos os campos!</p>
         </CustomModal>
       )}
 
+      {/* Tabela */}
       <div className="table-container">
         <table>
           <thead>
@@ -205,6 +226,7 @@ function MainTable({ records, setRecords, filterOption }) {
   );
 }
 
+// Prop-Types
 MainTable.propTypes = {
   records: PropTypes.array.isRequired,
   setRecords: PropTypes.func.isRequired,

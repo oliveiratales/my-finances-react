@@ -7,15 +7,17 @@ function CounterBox({ records, filterOption, setFilterOption }) {
   const [expenses, setExpenses] = useState(0);
   const [total, setTotal] = useState(0);
 
+  // Dados dos contadores
   useEffect(() => {
+    // Entradas
     const incomeTotal = records
       .filter((record) => record.type === "entrada")
       .reduce((total, record) => total + parseFloat(record.value), 0);
-
+    // Saídas
     const expensesTotal = records
       .filter((record) => record.type === "saída")
       .reduce((total, record) => total + parseFloat(record.value), 0);
-
+    // Total
     const totalAmount = incomeTotal - expensesTotal;
 
     setIncome(incomeTotal);
@@ -50,6 +52,7 @@ function CounterBox({ records, filterOption, setFilterOption }) {
   );
 }
 
+// Prop-Types
 CounterBox.propTypes = {
   records: PropTypes.array.isRequired,
   filterOption: PropTypes.string.isRequired,

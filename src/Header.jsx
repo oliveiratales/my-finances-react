@@ -2,9 +2,8 @@ import './Header.css';
 
 const Header = () => {
   return <header>
-    
-    <h1 className="app-title">My Finances</h1>
-    
+    {/* Nome do App */}
+    <h1 className="app-title">My Finances</h1> 
   </header>;
 };
 
